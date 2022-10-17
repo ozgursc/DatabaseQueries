@@ -1,2 +1,2 @@
-# PostgresIDConversion
-convert integer IDs to UUIDs in database without dataloss
+# DatabaseQueries
+This repository contains useful queries to address specific problems.
