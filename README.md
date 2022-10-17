@@ -10,4 +10,6 @@ This query group creates a function and a procedure in postgres database (public
 * Requires full DB drop & recreate in case a roll back is needed (for testing ie.).
 
 ```const_create_queries = array_append(const_create_queries, remove_old_fk_q);``` 
-line manages the drop of temp old id fields. Comment / Uncomment to check if conversion is correct.
+``` EXECUTE FORMAT('ALTER TABLE IF EXISTS %s DROP COLUMN old_id', p_table_name);``` 
+
+lines manage the drop of temp old id fields. Comment / Uncomment to check if conversion is correct.
