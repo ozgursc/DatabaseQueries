@@ -77,6 +77,7 @@ declare
 	set_fk_q character varying;
 	switch_fk_type_q character varying;
 	remove_old_fk_q character varying;
+	remove_old_id_q character varying;
 	
 	fk foreign_key_data;
 	
@@ -113,11 +114,14 @@ begin
 			
 		remove_old_fk_q = FORMAT('ALTER TABLE IF EXISTS %s DROP COLUMN old_%s;',
 						 fk.main_table_name, fk.main_column_name);
+						 
+		remove_old_id_q = FORMAT('ALTER TABLE IF EXISTS %s DROP COLUMN old_id;', p_table_name);
 		
 		const_create_queries = array_append(const_create_queries, switch_fk_type_q);
 		const_create_queries = array_append(const_create_queries, set_fk_q);
 		const_create_queries = array_append(const_create_queries, const_create_q);	
 		const_create_queries = array_append(const_create_queries, remove_old_fk_q);	
+		const_create_queries = array_append(const_create_queries, remove_old_id_q);	
 	end loop;
 	
 	-- add old foreign key columns
@@ -175,6 +179,7 @@ $BODY$;
 COMMIT;
 ----------------------
 -- SQL to check all tables for column name 'id' on position 1 
+-- RUN THIS SEPARATELY AFTER FUNCTION AND PROCEDURE IS CREATED
 -----------------------
 do 
 $$
